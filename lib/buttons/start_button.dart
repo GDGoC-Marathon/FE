@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text("버튼 테스트"),
+          title: const Text("버튼 테스트"),
         ),
-        body: Center(
+        body: const Center(
             child: StartButton(),
         ),
       ),
@@ -21,6 +23,8 @@ class MyApp extends StatelessWidget {
 }
 
 class StartButton extends StatelessWidget {
+  const StartButton({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -28,11 +32,11 @@ class StartButton extends StatelessWidget {
         width: 284, // 버튼의 너비
         height: 56, // 버튼의 높이
         decoration: BoxDecoration(
-          color: Color(0xFF3AA34B), // 버튼 색상
+          color: const Color(0xFF3AA34B), // 버튼 색상
           borderRadius: BorderRadius.circular(50.0), // 둥근 모서리
         ),
         alignment: Alignment.center, // 텍스트를 중앙 정렬
-        child: Text(
+        child: const Text(
           "시작하기",
           style: TextStyle(
             color: Colors.white,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gdgoc/buttons/start_button.dart';
 import 'package:gdgoc/pages/main_home_page.dart'; // student_cafeteria 페이지 import
+import 'package:gdgoc/pages/admin_page.dart'; // MyAdminPage 페이지 import
 
 void main() {
   runApp(const MyApp());
@@ -57,11 +58,20 @@ class _MyStartPageState extends State<MyStartPage> {
               child: const StartButton(),
             ),
             const SizedBox(height: 20),
-            const Text(
-              '관리자로 시작하기',
-              style: TextStyle(
-                color: Color(0xFF595959),
-                fontSize: 14,
+            // '관리자로 시작하기' 텍스트에 GestureDetector 추가하여 페이지 전환
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MyAdminPage()),
+                );
+              },
+              child: const Text(
+                '관리자로 시작하기',
+                style: TextStyle(
+                  color: Color(0xFF595959),
+                  fontSize: 14,
+                ),
               ),
             ),
             const SizedBox(height: 2),

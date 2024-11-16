@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-import 'package:gdgoc/buttons/remaining_count_button.dart';
+import 'package:gdgoc/buttons/luncheon_count_button.dart';
+import 'package:gdgoc/buttons/upload_button.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,31 +18,24 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MyTodayLunchWidget(),
+      home: MyAdminWidget(),
     );
   }
 }
 
-class MyTodayLunchWidget extends StatefulWidget {
-  const MyTodayLunchWidget({super.key});
+class MyAdminWidget extends StatefulWidget {
+  const MyAdminWidget({super.key});
 
   @override
-  State<MyTodayLunchWidget> createState() => _MyTodayLunchWidgetState();
+  State<MyAdminWidget> createState() => _MyAdminWidgetState();
 }
-class _MyTodayLunchWidgetState extends State<MyTodayLunchWidget> {
+class _MyAdminWidgetState extends State<MyAdminWidget> {
   final String formattedDate = DateFormat('MM월 dd일 EEEE', 'ko').format(DateTime.now());
-
-  // 페이지를 새로고침하는 함수
-  void _refreshPage() {
-    setState(() {
-      // 페이지 상태를 업데이트하여 새로고침
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF), // 전체 배경을 흰색으로 설정
+      backgroundColor: Colors.transparent,
       body: FutureBuilder(
         future: initializeDateFormatting('ko', null),
         builder: (context, snapshot) {
@@ -49,7 +43,7 @@ class _MyTodayLunchWidgetState extends State<MyTodayLunchWidget> {
             return Stack(
               children: [
                 Positioned(
-                  top: 0+10,
+                  top: 0,
                   left: 0,
                   right: 0,
                   child: Center(
@@ -64,7 +58,7 @@ class _MyTodayLunchWidgetState extends State<MyTodayLunchWidget> {
                   ),
                 ),
                 const Positioned(
-                  top: 30+10,
+                  top: 30,
                   left: 0,
                   right: 0,
                   child: Center(
@@ -78,24 +72,24 @@ class _MyTodayLunchWidgetState extends State<MyTodayLunchWidget> {
                     ),
                   ),
                 ),
-                // 회색 모서리가 둥근 직사각형 추가
-                Align(
-                  alignment: Alignment.topCenter, // 상단 중앙 정렬
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 90), // 상단에서 90만큼 떨어지게 설정
-                    height: 240,
-                    width: 320,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200], // 회색 배경색
-                      borderRadius: BorderRadius.circular(20), // 둥근 모서리
-                    ),
+                // UploadButton과 LuncheonCountButton에 크기 정의
+                const Positioned(
+                  left: 0,
+                  right: 0,
+                  top: 100,
+                  child: SizedBox(
+                    height: 400, // UploadButton의 높이
+                    child: UploadButton(),
                   ),
                 ),
-                Positioned(
-                  top: 360,
+                const Positioned(
+                  top: 450,
                   left: 40,
                   right: 40,
-                  child: RemainingCountButton(onRefresh: _refreshPage),
+                  child: SizedBox(
+                    height: 56, // LuncheonCountButton의 높이
+                    child: LuncheonCountButton(),
+                  ),
                 ),
               ],
             );

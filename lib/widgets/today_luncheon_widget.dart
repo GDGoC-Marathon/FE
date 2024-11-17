@@ -34,14 +34,14 @@ class _MyTodayLunchWidgetState extends State<MyTodayLunchWidget> {
   // 페이지를 새로고침하는 함수
   void _refreshPage() {
     setState(() {
-      // 페이지 상태를 업데이트하여 새로고침
+      // 페이지 상태를 업데이트 후 새로고침
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF), // 전체 배경을 흰색으로 설정
+      backgroundColor: const Color(0xFFFFFFFF),
       body: FutureBuilder(
         future: initializeDateFormatting('ko', null),
         builder: (context, snapshot) {
@@ -95,7 +95,7 @@ class _MyTodayLunchWidgetState extends State<MyTodayLunchWidget> {
                   top: 360,
                   left: 40,
                   right: 40,
-                  child: RemainingCountButton(onRefresh: _refreshPage),
+                  child: MyRemainingCountButton(onRefresh: _refreshPage),
                 ),
               ],
             );

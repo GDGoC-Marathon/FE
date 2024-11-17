@@ -32,7 +32,7 @@ class _MyStaffCafeteriaWidgetState extends State<MyStaffCafeteriaWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF), // 전체 배경을 흰색으로 설정
+      backgroundColor: const Color(0xFFFFFFFF),
       body: FutureBuilder(
         future: initializeDateFormatting('ko', null),
         builder: (context, snapshot) {
@@ -43,7 +43,7 @@ class _MyStaffCafeteriaWidgetState extends State<MyStaffCafeteriaWidget> {
                   top: 0,
                   left: 0,
                   right: 0,
-                  child: DateBar(),
+                  child: MyDateBar(),
                 ),
                 Positioned(
                   top: 70,
@@ -69,7 +69,7 @@ class _MyStaffCafeteriaWidgetState extends State<MyStaffCafeteriaWidget> {
   }
 }
 
-// 각 메뉴 정보를 표시하는 카드 위젯
+// 각 메뉴 정보를 표시하는 카드
 class MenuCard extends StatelessWidget {
   final List<Map<String, String>> categories;
 
@@ -81,7 +81,7 @@ class MenuCard extends StatelessWidget {
       padding: const EdgeInsets.all(25),
       height: 360,
       decoration: BoxDecoration(
-        color: const Color(0xFFFFFFFF), // 배경을 흰색으로 설정
+        color: const Color(0xFFFFFFFF),
         borderRadius: BorderRadius.circular(30),
         border: Border.all(
           color: const Color(0xFFDADADA),

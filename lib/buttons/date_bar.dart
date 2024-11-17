@@ -1,16 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart'; // 로케일 초기화를 위해 추가
+import 'package:intl/date_symbol_data_local.dart';
 
-class DateBar extends StatefulWidget {
-  const DateBar({super.key});
-
-  @override
-  State<DateBar> createState() => _DateBarState();
+// 실행 함수
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('ko'); // 한국어 로케일 초기화
+  runApp(const MyApp());
 }
 
-class _DateBarState extends State<DateBar> {
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(title: const Text("날짜 선택 바")),
+        body: const Center(
+          child: MyDateBar(),
+        ),
+      ),
+    );
+  }
+}
+
+class MyDateBar extends StatefulWidget {
+  const MyDateBar({super.key});
+
+  @override
+  State<MyDateBar> createState() => _MyDateBarState();
+}
+
+class _MyDateBarState extends State<MyDateBar> {
   DateTime _selectedDate = DateTime.now();
 
   // 날짜를 다음 날이나 이전 날로 변경하는 함수
@@ -47,30 +71,6 @@ class _DateBarState extends State<DateBar> {
           onPressed: () => _changeDate(1), // 다음 날짜로 이동
         ),
       ],
-    );
-  }
-}
-
-// 메인 실행 코드
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await initializeDateFormatting('ko'); // 한국어 로케일 초기화
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(title: const Text("날짜 선택 바")),
-        body: Center(
-          child: DateBar(), // DateBar 위젯을 화면 중앙에 추가
-        ),
-      ),
     );
   }
 }

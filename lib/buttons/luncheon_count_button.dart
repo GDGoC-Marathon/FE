@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+// 실행 함수
 void main() {
   runApp(const MyApp());
 }
@@ -11,53 +12,93 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("버튼 테스트"),
+          title: const Text("도시락 수량 카운트 버튼"),
         ),
         body: const Center(
-          child: LuncheonCountButton(),
+          child: MyLuncheonCountButton(),
         ),
       ),
     );
   }
 }
 
-class LuncheonCountButton extends StatefulWidget {
-  const LuncheonCountButton({super.key});
+// 도시락 수량을 나타내는 버튼
+class MyLuncheonCountButton extends StatefulWidget {
+  const MyLuncheonCountButton({super.key});
 
   @override
-  _LuncheonCountButtonState createState() => _LuncheonCountButtonState();
+  _MyLuncheonCountButtonState createState() => _MyLuncheonCountButtonState();
 }
 
-class _LuncheonCountButtonState extends State<LuncheonCountButton> {
-  int n = 0;
-  bool isEditing = false; // 입력 모드 상태 변수
+class _MyLuncheonCountButtonState extends State<MyLuncheonCountButton> {
+  int n = 0; // 도시락 수량 변수
+  bool isEditing = false; // 현재 입력 모드를 나타내는 상태 변수
   final TextEditingController _controller = TextEditingController();
 
+  // 애니메이션 관련 변수
+  double _scaleMinus = 1.0; // 마이너스 버튼 크기 상태
+  double _scalePlus = 1.0; // 플러스 버튼 크기 상태
+
+  // 마이너스 버튼 애니메이션
+  void _animateMinusButton() {
+    setState(() {
+      _scaleMinus = 0.8; // 버튼 축소
+    });
+
+    Future.delayed(const Duration(milliseconds: 100), () {
+      setState(() {
+        _scaleMinus = 1.0; // 원래 크기로 복원
+      });
+    });
+  }
+
+  // 플러스 버튼 애니메이션
+  void _animatePlusButton() {
+    setState(() {
+      _scalePlus = 0.8; // 버튼 축소
+    });
+
+    Future.delayed(const Duration(milliseconds: 100), () {
+      setState(() {
+        _scalePlus = 1.0; // 원래 크기로 복원
+      });
+    });
+  }
+
+  // 수량 감소 함수
+  void _decrement() {
+    if (n > 0) {
+      _animateMinusButton(); // 마이너스 버튼 애니메이션 실행
+      setState(() {
+        n--;
+      });
+    }
+  }
+
+  // 수량 증가 함수
   void _increment() {
+    _animatePlusButton(); // 플러스 버튼 애니메이션 실행
     setState(() {
       n++;
     });
   }
 
-  void _decrement() {
-    setState(() {
-      if (n > 0) n--;
-    });
-  }
-
+  // 입력 모드 전환
   void _toggleEditing() {
     setState(() {
       isEditing = !isEditing;
-      _controller.text = n.toString(); // TextField에 현재 값을 설정
+      _controller.text = n.toString();
     });
   }
 
+  // 입력값 반영
   void _updateValue(String value) {
     setState(() {
       n = int.tryParse(value) ?? n;
-      isEditing = false; // 입력 종료
+      isEditing = false;
     });
   }
 
@@ -74,7 +115,7 @@ class _LuncheonCountButtonState extends State<LuncheonCountButton> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           const Padding(
-            padding: EdgeInsets.only(left: 10), // '도시락 수량' 텍스트 오른쪽 간격 추가
+            padding: EdgeInsets.only(left: 10),
             child: Text(
               "도시락 수량",
               style: TextStyle(
@@ -84,14 +125,22 @@ class _LuncheonCountButtonState extends State<LuncheonCountButton> {
               ),
             ),
           ),
+
+          // 마이너스 버튼
           GestureDetector(
             onTap: _decrement,
-            child: SvgPicture.asset(
-              "assets/minus_button.svg",
-              width: 24,
-              height: 24,
+            child: AnimatedScale(
+              scale: _scaleMinus,
+              duration: const Duration(milliseconds: 100),
+              child: SvgPicture.asset(
+                "assets/minus_button.svg",
+                width: 24,
+                height: 24,
+              ),
             ),
           ),
+
+          // 도시락 수량 n을 나타내는 필드
           GestureDetector(
             onTap: _toggleEditing,
             child: isEditing
@@ -125,12 +174,18 @@ class _LuncheonCountButtonState extends State<LuncheonCountButton> {
               ),
             ),
           ),
+
+          // 플러스 버튼
           GestureDetector(
             onTap: _increment,
-            child: SvgPicture.asset(
-              "assets/plus_button.svg",
-              width: 24,
-              height: 24,
+            child: AnimatedScale(
+              scale: _scalePlus,
+              duration: const Duration(milliseconds: 100),
+              child: SvgPicture.asset(
+                "assets/plus_button.svg",
+                width: 24,
+                height: 24,
+              ),
             ),
           ),
         ],

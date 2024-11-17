@@ -38,7 +38,7 @@ class _MyAdminPageState extends State<MyAdminPage> {
         future: initializeDateFormatting('ko', null),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return Stack( // Stack을 사용하여 레이아웃 구성
+            return Stack(
               children: [
                 // 상단 로고
                 Positioned(
@@ -50,7 +50,7 @@ class _MyAdminPageState extends State<MyAdminPage> {
                     height: 36,
                   ),
                 ),
-                // 둥근 모서리 흰색 배경
+
                 Positioned(
                   top: 130,  // 로고 아래 위치
                   left: 0,
@@ -66,7 +66,7 @@ class _MyAdminPageState extends State<MyAdminPage> {
                       ),
                     ),
                     child: const Padding(
-                      padding: EdgeInsets.only(top: 20), // MyAdminWidget 위쪽 여백 추가
+                      padding: EdgeInsets.only(top: 20),
                       child: MyAdminWidget(),
                     ),
                   ),

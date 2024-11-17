@@ -43,7 +43,7 @@ class _MyStudentCafeteriaWidgetState extends State<MyStudentCafeteriaWidget> {
                   top: 0,
                   left: 0,
                   right: 0,
-                  child: DateBar(),
+                  child: MyDateBar(),
                 ),
                 Positioned(
                   top: 70,
@@ -81,7 +81,7 @@ class MenuCard extends StatelessWidget {
       padding: const EdgeInsets.all(25),
       height: 360,
       decoration: BoxDecoration(
-        color: const Color(0xFFFFFFFF), // 배경을 흰색으로 설정
+        color: const Color(0xFFFFFFFF),
         borderRadius: BorderRadius.circular(30),
         border: Border.all(
           color: const Color(0xFFDADADA),

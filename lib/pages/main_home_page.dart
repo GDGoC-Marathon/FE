@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/date_symbol_data_local.dart';
+
 import 'package:gdgoc/buttons/button_bar.dart';
-import 'package:gdgoc/widgets/student_cafeteria_widget.dart'; // 추가
-import 'package:gdgoc/widgets/staff_cafeteria_widget.dart'; // 추가
-import 'package:gdgoc/widgets/today_luncheon_widget.dart'; // 추가
+import 'package:gdgoc/widgets/student_cafeteria_widget.dart';
+import 'package:gdgoc/widgets/staff_cafeteria_widget.dart';
+import 'package:gdgoc/widgets/today_luncheon_widget.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +33,7 @@ class MyMainHomePage extends StatefulWidget {
 }
 
 class _MyMainHomePageState extends State<MyMainHomePage> {
-  String _selectedPage = 'student'; // 현재 선택된 페이지를 관리합니다.
+  String _selectedPage = 'student';
 
   // 버튼 클릭 시 상태 변경
   void _onButtonClicked(String page) {
@@ -49,7 +50,7 @@ class _MyMainHomePageState extends State<MyMainHomePage> {
         future: initializeDateFormatting('ko', null),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return Stack( // Stack을 다시 사용하여 레이아웃 구성
+            return Stack(
               children: [
                 // 상단 로고
                 Positioned(
@@ -61,9 +62,9 @@ class _MyMainHomePageState extends State<MyMainHomePage> {
                     height: 36,
                   ),
                 ),
-                // 둥근 모서리 흰색 배경
+
                 Positioned(
-                  top: 130,  // Adjusted to ensure it appears below the logo
+                  top: 130,
                   left: 0,
                   right: 0,
                   child: Container(
@@ -82,14 +83,14 @@ class _MyMainHomePageState extends State<MyMainHomePage> {
                   top: 170, // Adjusted to position below the logo
                   left: 0,
                   right: 0,
-                  child: ButtonBarWidget(
+                  child: MyButtonBar(
                     selectedButton: _selectedPage,
                     onButtonClicked: _onButtonClicked,
                   ),
                 ),
                 // 선택된 페이지 콘텐츠 표시
                 Positioned(
-                  top: 230, // Adjusted to position below the ButtonBarWidget
+                  top: 230,
                   left: 0,
                   right: 0,
                   bottom: 0,
@@ -105,7 +106,7 @@ class _MyMainHomePageState extends State<MyMainHomePage> {
     );
   }
 
-  // 현재 선택된 페이지에 맞는 위젯을 반환합니다.
+  // 현재 선택된 페이지에 맞는 위젯 반환
   Widget _getSelectedPage() {
     switch (_selectedPage) {
       case 'student':

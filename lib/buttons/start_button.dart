@@ -10,9 +10,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("버튼 테스트"),
+          title: const Text("시작하기 버튼"),
         ),
         body: const Center(
             child: StartButton(),
@@ -29,13 +30,13 @@ class StartButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
-        width: 284, // 버튼의 너비
-        height: 56, // 버튼의 높이
+        width: 284,
+        height: 56,
         decoration: BoxDecoration(
-          color: const Color(0xFF3AA34B), // 버튼 색상
-          borderRadius: BorderRadius.circular(50.0), // 둥근 모서리
+          color: const Color(0xFF3AA34B),
+          borderRadius: BorderRadius.circular(50.0),
         ),
-        alignment: Alignment.center, // 텍스트를 중앙 정렬
+        alignment: Alignment.center,
         child: const Text(
           "시작하기",
           style: TextStyle(

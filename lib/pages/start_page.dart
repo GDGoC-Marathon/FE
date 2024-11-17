@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gdgoc/buttons/start_button.dart';
-import 'package:gdgoc/pages/main_home_page.dart'; // student_cafeteria 페이지 import
-import 'package:gdgoc/pages/admin_page.dart'; // MyAdminPage 페이지 import
+import 'package:gdgoc/pages/main_home_page.dart';
+import 'package:gdgoc/pages/admin_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,6 +36,8 @@ class _MyStartPageState extends State<MyStartPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+
+            // 앱 로고
             const SizedBox(height: 60),
             SvgPicture.asset(
               'assets/점심의 재발견_green.svg',
@@ -47,7 +49,8 @@ class _MyStartPageState extends State<MyStartPage> {
               height: 180,
             ),
             const SizedBox(height: 150),
-            // StartButton 위젯을 GestureDetector로 감싸서 onPressed 콜백 추가
+
+            // "StartButton" 버튼 누르면 시작 페이지로 전환
             GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -58,7 +61,8 @@ class _MyStartPageState extends State<MyStartPage> {
               child: const StartButton(),
             ),
             const SizedBox(height: 20),
-            // '관리자로 시작하기' 텍스트에 GestureDetector 추가하여 페이지 전환
+
+            // "관리자로 시작하기" 버튼 누르면 관리자 페이지로 전환
             GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -74,6 +78,8 @@ class _MyStartPageState extends State<MyStartPage> {
                 ),
               ),
             ),
+
+            // '관리로 시작하기' 밑줄 추가
             const SizedBox(height: 2),
             Container(
               width: 112,

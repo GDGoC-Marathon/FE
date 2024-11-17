@@ -30,6 +30,8 @@ class MyAdminWidget extends StatefulWidget {
   State<MyAdminWidget> createState() => _MyAdminWidgetState();
 }
 class _MyAdminWidgetState extends State<MyAdminWidget> {
+
+  // 날짜 형식을 'xx월 xx일 x요일' 형태로 지정
   final String formattedDate = DateFormat('MM월 dd일 EEEE', 'ko').format(DateTime.now());
 
   @override
@@ -39,6 +41,7 @@ class _MyAdminWidgetState extends State<MyAdminWidget> {
       body: FutureBuilder(
         future: initializeDateFormatting('ko', null),
         builder: (context, snapshot) {
+          // 비동기 작업 완료 후 화면 렌더링
           if (snapshot.connectionState == ConnectionState.done) {
             return Stack(
               children: [
@@ -72,28 +75,33 @@ class _MyAdminWidgetState extends State<MyAdminWidget> {
                     ),
                   ),
                 ),
-                // UploadButton과 LuncheonCountButton에 크기 정의
+
+                // 사진 업로드 버튼 배치
                 const Positioned(
                   left: 0,
                   right: 0,
                   top: 100,
                   child: SizedBox(
-                    height: 400, // UploadButton의 높이
+                    height: 400,
                     child: UploadButton(),
                   ),
                 ),
+
+                // 도시락 개수 카운트 버튼 배치
                 const Positioned(
                   top: 450,
                   left: 40,
                   right: 40,
                   child: SizedBox(
-                    height: 56, // LuncheonCountButton의 높이
-                    child: LuncheonCountButton(),
+                    height: 56,
+                    child: MyLuncheonCountButton(),
                   ),
                 ),
               ],
             );
-          } else {
+          }
+          // 비동기 작업 진행 중일 때 로딩 표시
+          else {
             return const Center(child: CircularProgressIndicator());
           }
         },

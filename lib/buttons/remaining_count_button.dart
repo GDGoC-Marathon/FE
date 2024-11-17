@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+// 실행 함수
 void main() {
   runApp(const MyApp());
 }
@@ -27,16 +28,16 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       key: _appKey, // 전체 앱에 Key 적용
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("버튼 테스트"),
+          title: const Text("남은 도시락 수량 버튼"),
         ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 20), // 버튼 간격
-              RemainingCountButton(onRefresh: _refreshPage), // 새로고침 함수 전달
+              MyRemainingCountButton(onRefresh: _refreshPage), // 새로고침 함수 전달
             ],
           ),
         ),
@@ -45,16 +46,50 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-// 남은수량 버튼
-class RemainingCountButton extends StatelessWidget {
+// 남은 도시락 수량 버튼
+class MyRemainingCountButton extends StatefulWidget {
   final VoidCallback onRefresh; // 페이지 새로고침 함수
 
-  const RemainingCountButton({super.key, required this.onRefresh});
+  const MyRemainingCountButton({super.key, required this.onRefresh});
+
+  @override
+  _MyRemainingCountButtonState createState() => _MyRemainingCountButtonState();
+}
+
+class _MyRemainingCountButtonState extends State<MyRemainingCountButton> with TickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 100), // 애니메이션 지속 시간
+    );
+
+    // 축소 및 복원 애니메이션 설정
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.8).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onRefresh,
+      onTap: () {
+        _animationController.forward().then((value) {
+          // 애니메이션 후 새로고침 함수 호출
+          widget.onRefresh();
+          _animationController.reverse();
+        });
+      },
       child: Container(
         width: 284,
         height: 56,
@@ -77,10 +112,17 @@ class RemainingCountButton extends StatelessWidget {
                 ),
               ),
             ),
-            InkWell(
-              onTap: onRefresh, // 새로고침 기능
+            // 새로고침 버튼
+            AnimatedBuilder(
+              animation: _scaleAnimation,
+              builder: (context, child) {
+                return Transform.scale(
+                  scale: _scaleAnimation.value,
+                  child: child,
+                );
+              },
               child: SvgPicture.asset(
-                'assets/reload.svg', // 새로고침 아이콘 경로
+                'assets/reload.svg',
                 width: 24,
                 height: 24,
               ),

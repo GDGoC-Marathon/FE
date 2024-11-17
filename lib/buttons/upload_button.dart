@@ -12,9 +12,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("사진 업로드 및 확대/축소"),
+          title: const Text("사진 업로드"),
         ),
         body: const Center(
           child: UploadButton(),
@@ -32,7 +33,7 @@ class UploadButton extends StatefulWidget {
 }
 
 class _UploadButtonState extends State<UploadButton> {
-  // 선택된 이미지 파일을 저장할 변수
+  // 선택된 이미지 파일 변수
   File? _image;
 
   // 이미지 선택 메소드
@@ -52,22 +53,22 @@ class _UploadButtonState extends State<UploadButton> {
     return Stack(
       alignment: Alignment.center,
       children: [
-        // 회색 배경이 있는 컨테이너
         Positioned(
-          top: 0, // 화면 상단에 배치
+          top: 0,
           child: Align(
-            alignment: Alignment.topCenter, // 세로 중앙 정렬
+            alignment: Alignment.topCenter,
             child: Container(
-              height: 240, // 고정된 높이
-              width: 320, // 고정된 너비
+              height: 240,
+              width: 320,
               decoration: BoxDecoration(
                 color: Colors.grey[200], // 회색 배경색
-                borderRadius: BorderRadius.circular(20), // 둥근 모서리
+                borderRadius: BorderRadius.circular(20),
               ),
+
               // 이미지가 선택되면 확대/축소 기능 제공
               child: _image != null
                   ? ClipRRect(
-                borderRadius: BorderRadius.circular(20), // 이미지의 모서리를 둥글게
+                borderRadius: BorderRadius.circular(20),
                 child: InteractiveViewer(
                   maxScale: 5.0, // 최대 확대 비율
                   minScale: 1.0, // 최소 축소 비율
@@ -86,21 +87,22 @@ class _UploadButtonState extends State<UploadButton> {
             ),
           ),
         ),
-        // 업로드 버튼
+
+        // 업로드 버튼 배치
         Positioned(
-          top: 240 + 30, // 컨테이너 아래로 30만큼 떨어진 위치
+          top: 240 + 30,
           left: 40,
           right: 40,
           child: GestureDetector(
-            onTap: _pickImage, // 버튼을 누르면 이미지 선택
+            onTap: _pickImage, // 클릭 시 이미지 선택
             child: Container(
-              width: 284, // 버튼의 너비
-              height: 56, // 버튼의 높이
+              width: 284,
+              height: 56,
               decoration: BoxDecoration(
-                color: const Color(0xFF3AA34B), // 버튼 색상
-                borderRadius: BorderRadius.circular(50.0), // 둥근 모서리
+                color: const Color(0xFF3AA34B),
+                borderRadius: BorderRadius.circular(50.0),
               ),
-              alignment: Alignment.center, // 텍스트를 중앙 정렬
+              alignment: Alignment.center,
               child: const Text(
                 "사진 업로드",
                 style: TextStyle(

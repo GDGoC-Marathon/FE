@@ -1,33 +1,32 @@
+// 연습용
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' as parser;
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '학생식단',
       theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
-      home: const MyStudentCafeteriaWidget(),
+      home: MenuPage(),
     );
   }
 }
 
-class MyStudentCafeteriaWidget extends StatefulWidget {
-  const MyStudentCafeteriaWidget({super.key});
-
+class MenuPage extends StatefulWidget {
   @override
-  _MyStudentCafeteriaWidgetState createState() => _MyStudentCafeteriaWidgetState();
+  _MenuPageState createState() => _MenuPageState();
 }
 
-class _MyStudentCafeteriaWidgetState extends State<MyStudentCafeteriaWidget> {
+class _MenuPageState extends State<MenuPage> {
   Map<String, List<Map<String, String>>> menuData = {};
   bool isLoading = true;
 
@@ -106,11 +105,12 @@ class _MyStudentCafeteriaWidgetState extends State<MyStudentCafeteriaWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // 배경색 설정
+      appBar: AppBar(
+        title: Text('학생식단'),
+      ),
       body: isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(child: CircularProgressIndicator())
           : ListView.builder(
-        padding: EdgeInsets.zero,
         itemCount: menuData.length,
         itemBuilder: (context, index) {
           // 날짜와 해당 날짜의 메뉴 가져오기
@@ -118,11 +118,11 @@ class _MyStudentCafeteriaWidgetState extends State<MyStudentCafeteriaWidget> {
           List<Map<String, String>> menus = menuData[date]!;
 
           return Container(
-            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(20),
               border: Border.all(color: const Color(0xFFDADADA), width: 3),
               boxShadow: [
                 BoxShadow(
@@ -137,8 +137,8 @@ class _MyStudentCafeteriaWidgetState extends State<MyStudentCafeteriaWidget> {
               children: [
                 Text(
                   date,
-                  style: const TextStyle(
-                    fontSize: 20,
+                  style: TextStyle(
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.black87,
                   ),
@@ -147,23 +147,29 @@ class _MyStudentCafeteriaWidgetState extends State<MyStudentCafeteriaWidget> {
                 ...menus.map((menuItem) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text.rich(
-                      TextSpan(
-                        text: '${menuItem['category']} (${menuItem['price']}원)', // 카테고리와 가격 bold 처리
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: '\n${menuItem['menu']}', // 메뉴는 기본 스타일
-                            style: const TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 16,
-                            ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            '${menuItem['category']}',
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                        ],
-                      ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            menuItem['menu']!,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            '${menuItem['price']}원',
+                            textAlign: TextAlign.end,
+                            style: TextStyle(color: Colors.green),
+                          ),
+                        ),
+                      ],
                     ),
                   );
                 }).toList(),

@@ -80,7 +80,7 @@ class _MyMainHomePageState extends State<MyMainHomePage> {
                 ),
                 // 버튼 영역
                 Positioned(
-                  top: 170, // Adjusted to position below the logo
+                  top: 150, // Adjusted to position below the logo
                   left: 0,
                   right: 0,
                   child: MyButtonBar(
@@ -90,7 +90,7 @@ class _MyMainHomePageState extends State<MyMainHomePage> {
                 ),
                 // 선택된 페이지 콘텐츠 표시
                 Positioned(
-                  top: 230,
+                  top: 210,
                   left: 0,
                   right: 0,
                   bottom: 0,

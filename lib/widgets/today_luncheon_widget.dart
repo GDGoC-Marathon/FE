@@ -28,6 +28,7 @@ class MyTodayLunchWidget extends StatefulWidget {
   @override
   State<MyTodayLunchWidget> createState() => _MyTodayLunchWidgetState();
 }
+
 class _MyTodayLunchWidgetState extends State<MyTodayLunchWidget> {
   final String formattedDate = DateFormat('MM월 dd일 EEEE', 'ko').format(DateTime.now());
 
@@ -49,7 +50,7 @@ class _MyTodayLunchWidgetState extends State<MyTodayLunchWidget> {
             return Stack(
               children: [
                 Positioned(
-                  top: 0+10,
+                  top: 0 + 10,
                   left: 0,
                   right: 0,
                   child: Center(
@@ -64,7 +65,7 @@ class _MyTodayLunchWidgetState extends State<MyTodayLunchWidget> {
                   ),
                 ),
                 const Positioned(
-                  top: 30+10,
+                  top: 30 + 10,
                   left: 0,
                   right: 0,
                   child: Center(
@@ -78,16 +79,19 @@ class _MyTodayLunchWidgetState extends State<MyTodayLunchWidget> {
                     ),
                   ),
                 ),
-                // 회색 모서리가 둥근 직사각형 추가
+                // 이미지 추가: 도시락.jpg 이미지 파일을 넣고 모서리 둥글게 처리
                 Align(
                   alignment: Alignment.topCenter, // 상단 중앙 정렬
                   child: Container(
                     margin: const EdgeInsets.only(top: 90), // 상단에서 90만큼 떨어지게 설정
                     height: 240,
                     width: 320,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200], // 회색 배경색
-                      borderRadius: BorderRadius.circular(20), // 둥근 모서리
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20), // 둥근 모서리 설정
+                      child: Image.asset(
+                        'assets/도시락.jpg',
+                        fit: BoxFit.cover, // 이미지가 컨테이너를 채우도록
+                      ),
                     ),
                   ),
                 ),
@@ -96,6 +100,33 @@ class _MyTodayLunchWidgetState extends State<MyTodayLunchWidget> {
                   left: 40,
                   right: 40,
                   child: MyRemainingCountButton(onRefresh: _refreshPage),
+                ),
+                // 경고 문구 추가
+                Positioned(
+                  bottom: 20,
+                  left: 20,
+                  right: 20,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                    child: const Row(
+                      children: [
+                        Icon(
+                          Icons.warning_amber_rounded,
+                          color: Colors.orange,
+                        ),
+                        SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            '신선도를 위해 도시락은 구매 후 1시간 이내에 드시는 것을 권장드립니다.',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             );

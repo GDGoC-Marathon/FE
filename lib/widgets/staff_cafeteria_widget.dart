@@ -37,7 +37,8 @@ class _MyStaffCafeteriaWidgetState extends State<MyStaffCafeteriaWidget> {
 
   Future<void> fetchMenuData() async {
     try {
-      final response = await http.get(Uri.parse("http://10.0.2.2:8080/professor-lunch-menu"));
+      final response = await http.get(Uri.parse
+        ("http://ec2-13-124-189-187.ap-northeast-2.compute.amazonaws.com:8080/professor-lunch-menu"));
 
       if (response.statusCode == 200) {
         final document = htmlParser.parse(response.body);
